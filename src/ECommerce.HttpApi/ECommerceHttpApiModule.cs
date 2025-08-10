@@ -8,6 +8,8 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 
 namespace ECommerce;
 
@@ -25,6 +27,11 @@ public class ECommerceHttpApiModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         ConfigureLocalization();
+
+        Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            options.SendExceptionsDetailsToClients = true;
+        });
     }
 
     private void ConfigureLocalization()
@@ -37,5 +44,6 @@ public class ECommerceHttpApiModule : AbpModule
                     typeof(AbpUiResource)
                 );
         });
+    
     }
 }

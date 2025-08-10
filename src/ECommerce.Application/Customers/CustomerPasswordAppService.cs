@@ -1,0 +1,25 @@
+﻿using ECommerce.Customers.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Repositories;
+
+namespace ECommerce.Customers
+{
+    public class CustomerPasswordAppService : CrudAppService<
+        CustomerPassword,
+        CustomerPasswordDto,
+        int,
+        PagedAndSortedResultRequestDto,
+        CreateCustomerPasswordDto>,
+        ICustomerPasswordAppService
+    {
+        public CustomerPasswordAppService(IRepository<CustomerPassword, int> repository) : base(repository)
+        {
+        }
+    }
+}
