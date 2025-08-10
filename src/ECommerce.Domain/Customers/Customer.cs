@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Guids;
 
-namespace ECommerce.Customers.cs
+namespace ECommerce.Customers
 {
     public class Customer : Entity<Guid>
     {
-        #region Property
+        #region Properties
         
         public string Name { get; private set; }
         public string Email { get; private set; }
@@ -20,6 +21,15 @@ namespace ECommerce.Customers.cs
         public CustomerType Type { get; private set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        public ICollection<CustomerPassword> CustomerPasswords { get; set; }
+
+        public ICollection<CustomerCustomerRole> CustomerCustomerRoles { get; private set; } = new List<CustomerCustomerRole>();
+
+        #endregion
+
 
         #region Ctor
         private Customer() { }//EF Core needs this
@@ -33,6 +43,23 @@ namespace ECommerce.Customers.cs
             IsActive = true;
             CreatedOnUtc = DateTime.UtcNow;
             Type = type;
+        }
+        #endregion
+
+        #region Helper Methods
+
+        public void AddRole(Guid roleId)
+        {
+            if(!CustomerCustomerRoles.Any(x=>x.CustomerRoleId == roleId))
+            {
+                CustomerCustomerRoles.Add(new CustomerCustomerRole(Guid.NewGuid(), this.Id, roleId));
+            }
+        }
+
+        public void RemoveRole(Guid roleId) 
+        {
+            var mapping = CustomerCustomerRoles.FirstOrDefault(x=>x.CustomerRoleId == roleId);
+            if(mapping != null) CustomerCustomerRoles.Remove(mapping);
         }
         #endregion
     }

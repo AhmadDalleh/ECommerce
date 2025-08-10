@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ECommerce.Customers;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -53,6 +54,16 @@ public class ECommerceDbContext :
 
     #endregion
 
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<CustomerPassword> CustomersPassword { get; set; }
+
+    public DbSet<CustomerRole> CustomerRoles { get; set; }
+    public DbSet<CustomerCustomerRole> CustomerCustomerRoles { get; set; }
+
+    public DbSet<Address> Addresses { get; set; }
+
+    public DbSet<CustomerAddress> CustomerAddresses { get; set; }
+
     public ECommerceDbContext(DbContextOptions<ECommerceDbContext> options)
         : base(options)
     {
@@ -83,5 +94,10 @@ public class ECommerceDbContext :
         //    //...
         //});
         builder.ApplyConfiguration(new Customers.CustomerEntityTypeConfiguration());
+        builder.ApplyConfiguration(new Customers.CustomerPasswordEntityTypeConfiguration());
+        builder.ApplyConfiguration(new Customers.CustomerRoleConfiguration());
+        builder.ApplyConfiguration(new Customers.CustomerCustomerRoleConfiguration());
+        builder.ApplyConfiguration(new Customers.AddressEntityConfiguration());
+        builder.ApplyConfiguration(new Customers.CustomerAddressEntityConfiguration());
     }
 }

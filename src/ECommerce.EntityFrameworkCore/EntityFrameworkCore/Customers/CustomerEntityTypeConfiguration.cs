@@ -1,4 +1,4 @@
-﻿using ECommerce.Customers.cs;
+﻿using ECommerce.Customers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
