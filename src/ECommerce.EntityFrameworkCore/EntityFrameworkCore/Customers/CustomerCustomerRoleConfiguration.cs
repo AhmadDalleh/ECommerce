@@ -18,16 +18,18 @@ namespace ECommerce.EntityFrameworkCore.Customers
 
             builder.HasKey(x => x.Id);
 
-            builder.HasIndex(x => new {x.CustomerId,x.CustomerRoleId}).IsUnique(false);
+            builder.HasIndex(x => new { x.CustomerId, x.CustomerRoleId }).IsUnique(false);
 
-            builder.HasOne(x=>x.Customer)
-                .WithMany(c=>c.CustomerCustomerRoles)
+            builder.HasOne(x => x.Customer)
+                .WithMany(c => c.CustomerCustomerRoles)
                 .HasForeignKey(x => x.CustomerId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(x=>x.CustomerRole)
-                .WithMany(r=>r.CustomerCustomerRoles)
-                .HasForeignKey(x=>x.CustomerRoleId)
+            builder.HasOne(x => x.CustomerRole)
+                .WithMany(r => r.CustomerCustomerRoles)
+                .HasForeignKey(x => x.CustomerRoleId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

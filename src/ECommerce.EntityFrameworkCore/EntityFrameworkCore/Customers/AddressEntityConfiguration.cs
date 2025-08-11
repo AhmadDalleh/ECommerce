@@ -16,10 +16,36 @@ namespace ECommerce.EntityFrameworkCore.Customers
         {
             builder.ToTable("Address");
             builder.ConfigureByConvention();
-            builder.Property(a => a.FirstName).HasMaxLength(100);
-            builder.Property(a => a.LastName).HasMaxLength(100);
-            builder.Property(a => a.Email).HasMaxLength(255);
 
+            builder.Property(a => a.FirstName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(a => a.LastName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(a => a.Email)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            builder.Property(a => a.Address1)
+                .IsRequired();
+
+            builder.Property(a => a.Address2)
+                .IsRequired();
+
+            builder.Property(a => a.City)
+                .IsRequired();
+
+            builder.Property(a => a.Country)
+                .IsRequired();
+
+            builder.Property(a => a.PhoneNumber)
+                .IsRequired();
+
+            builder.Property(a => a.ZipPostalCode)
+                .IsRequired();
         }
     }
 }

@@ -19,6 +19,8 @@ namespace ECommerce.Customers
 
         #endregion
 
+        public Customer Customer { get; private set; }
+
         #region Ctor
         private CustomerPassword() { }
 

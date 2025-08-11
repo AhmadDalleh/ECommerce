@@ -1,4 +1,5 @@
-﻿using ECommerce.Customers;
+﻿using ECommerce.Catalog;
+using ECommerce.Customers;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -54,6 +55,8 @@ public class ECommerceDbContext :
 
     #endregion
 
+    #region Customer Entities
+
     public DbSet<Customer> Customers { get; set; }
     public DbSet<CustomerPassword> CustomersPassword { get; set; }
 
@@ -63,6 +66,16 @@ public class ECommerceDbContext :
     public DbSet<Address> Addresses { get; set; }
 
     public DbSet<CustomerAddress> CustomerAddresses { get; set; }
+
+    #endregion
+
+    #region Catalog Entities
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductPhoto> ProductPhotos { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+
+    #endregion
 
     public ECommerceDbContext(DbContextOptions<ECommerceDbContext> options)
         : base(options)
@@ -93,11 +106,23 @@ public class ECommerceDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        #region Customer Tables Configurations
         builder.ApplyConfiguration(new Customers.CustomerEntityTypeConfiguration());
         builder.ApplyConfiguration(new Customers.CustomerPasswordEntityTypeConfiguration());
         builder.ApplyConfiguration(new Customers.CustomerRoleConfiguration());
         builder.ApplyConfiguration(new Customers.CustomerCustomerRoleConfiguration());
         builder.ApplyConfiguration(new Customers.AddressEntityConfiguration());
         builder.ApplyConfiguration(new Customers.CustomerAddressEntityConfiguration());
+
+        #endregion
+
+        #region Catlog Tables Configurations
+        builder.ApplyConfiguration(new Catalog.CategoryConfiguration());
+        builder.ApplyConfiguration(new Catalog.ProductConfiguration());
+        builder.ApplyConfiguration(new Catalog.ProductPhotoConfiguration());
+        builder.ApplyConfiguration(new Catalog.ProductCategoryConfiguration());
+        #endregion
+
     }
 }

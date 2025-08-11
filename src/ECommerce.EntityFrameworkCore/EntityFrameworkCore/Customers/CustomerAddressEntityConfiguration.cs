@@ -14,17 +14,18 @@ namespace ECommerce.EntityFrameworkCore.Customers
         public void Configure(EntityTypeBuilder<CustomerAddress> builder)
         {
             builder.ToTable("Customer_Address_Mapping"); // match nopCommerce
+
             builder.HasKey(ca => new { ca.CustomerId, ca.AddressId });
 
             builder.HasOne<Customer>()
-             .WithMany()
-             .HasForeignKey(ca => ca.CustomerId)
-             .OnDelete(DeleteBehavior.Cascade);
+                .WithMany()
+                .HasForeignKey(ca => ca.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne<Address>()
-             .WithMany()
-             .HasForeignKey(ca => ca.AddressId)
-             .OnDelete(DeleteBehavior.Cascade);
+                .WithMany()
+                .HasForeignKey(ca => ca.AddressId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

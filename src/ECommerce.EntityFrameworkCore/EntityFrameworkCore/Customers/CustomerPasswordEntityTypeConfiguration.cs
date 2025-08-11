@@ -14,11 +14,10 @@ namespace ECommerce.EntityFrameworkCore.Customers
         public void Configure(EntityTypeBuilder<CustomerPassword> builder)
         {
             builder.ToTable("CustomersPasswords");
-            builder.HasKey(cp=>cp.Id);
+            builder.HasKey(cp => cp.Id);
 
-            builder.Property(cp=>cp.Password)
+            builder.Property(cp => cp.Password)
                 .IsRequired();
-
 
             builder.Property(cp => cp.PasswordFormatId)
                 .IsRequired();
@@ -26,9 +25,10 @@ namespace ECommerce.EntityFrameworkCore.Customers
             builder.Property(cp => cp.CreatedOnUtc)
                 .IsRequired();
 
-           builder.HasOne<Customer>()
-                .WithMany()
-                .HasForeignKey(cp=>cp.CustomerId)
+            builder.HasOne(cp => cp.Customer)
+                .WithMany(c => c.CustomerPasswords)
+                .HasForeignKey(cp => cp.CustomerId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -20,17 +20,22 @@ namespace ECommerce.EntityFrameworkCore.Customers
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(c=>c.Email)
+            builder.Property(c => c.Email)
                 .IsRequired()
                 .HasMaxLength(255);
 
             builder.Property(c => c.PasswordHash)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(512);
 
             builder.Property(c => c.Type)
                 .IsRequired();
 
             builder.Property(c => c.CreatedOnUtc)
+                .IsRequired();
+
+            builder.Property(c => c.IsActive)
+                .HasDefaultValue(true)
                 .IsRequired();
         }
     }

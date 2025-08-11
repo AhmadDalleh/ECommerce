@@ -24,9 +24,11 @@ namespace ECommerce.Customers
 
         #region Navigation Properties
 
-        public ICollection<CustomerPassword> CustomerPasswords { get; set; }
+        public ICollection<CustomerPassword> CustomerPasswords { get; private set; }
 
         public ICollection<CustomerCustomerRole> CustomerCustomerRoles { get; private set; } = new List<CustomerCustomerRole>();
+
+        public ICollection<CustomerAddress> CustomerAddresses { get; private set; }
 
         #endregion
 
@@ -34,8 +36,8 @@ namespace ECommerce.Customers
         #region Ctor
         private Customer() { }//EF Core needs this
 
-        public Customer(Guid id,string name, string email, string passwordHash, CustomerType type)
-            :base(id)
+        public Customer(Guid id, string name, string email, string passwordHash, CustomerType type, ICollection<CustomerAddress> customerAddresses)
+            : base(id)
         {
             Name = name;
             Email = email;
@@ -43,6 +45,7 @@ namespace ECommerce.Customers
             IsActive = true;
             CreatedOnUtc = DateTime.UtcNow;
             Type = type;
+            CustomerAddresses = customerAddresses;
         }
         #endregion
 
