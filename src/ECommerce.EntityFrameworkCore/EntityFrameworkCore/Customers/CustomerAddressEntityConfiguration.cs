@@ -15,14 +15,19 @@ namespace ECommerce.EntityFrameworkCore.Customers
         {
             builder.ToTable("Customer_Address_Mapping"); // match nopCommerce
 
-            builder.HasKey(ca => new { ca.CustomerId, ca.AddressId });
+            // Use Guid as primary key, but ensure CustomerId + AddressId combination is unique
+            builder.HasKey(ca => ca.Id);
+            
+            // Create unique index on CustomerId + AddressId to prevent duplicates
+            builder.HasIndex(ca => new { ca.CustomerId, ca.AddressId })
+                .IsUnique();
 
-            builder.HasOne<Customer>()
-                .WithMany()
+            builder.HasOne(ca => ca.Customer)
+                .WithMany(c => c.CustomerAddresses)
                 .HasForeignKey(ca => ca.CustomerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne<Address>()
+            builder.HasOne(ca => ca.Address)
                 .WithMany()
                 .HasForeignKey(ca => ca.AddressId)
                 .OnDelete(DeleteBehavior.Cascade);

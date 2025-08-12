@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace ECommerce.Customers
 {
-    public class CustomerAddress : Entity
+    public class CustomerAddress : Entity<Guid>
     {
         #region Properties
 
@@ -21,14 +21,16 @@ namespace ECommerce.Customers
 
         public CustomerAddress(Guid customerId, Guid addressId)
         {
+            Id = Guid.NewGuid();
             CustomerId = customerId;
             AddressId = addressId;
         }
 
         #endregion
 
-        #region Apstrach enitiy mithod
-        public override object?[] GetKeys() => new object[] {CustomerId, AddressId};
+        #region Navigation Properties
+        public virtual Customer Customer { get; set; }
+        public virtual Address Address { get; set; }
         #endregion
     }
 }

@@ -29,11 +29,14 @@ namespace ECommerce.EntityFrameworkCore.Customers
                 .IsRequired()
                 .HasMaxLength(255);
 
+            builder.Property(a => a.Company)
+                .IsRequired(false);
+
             builder.Property(a => a.Address1)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(a => a.Address2)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(a => a.City)
                 .IsRequired();
@@ -42,10 +45,10 @@ namespace ECommerce.EntityFrameworkCore.Customers
                 .IsRequired();
 
             builder.Property(a => a.PhoneNumber)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(a => a.ZipPostalCode)
-                .IsRequired();
+                .IsRequired(false);
         }
     }
 }

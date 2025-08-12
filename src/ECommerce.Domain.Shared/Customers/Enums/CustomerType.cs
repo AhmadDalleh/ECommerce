@@ -9,6 +9,10 @@ namespace ECommerce.Customers.Enums
     public enum CustomerType
     {
         Regular = 0,
-        Admin = 1 
+        Admin = 1,
+        Guest = 2,
+        Administrator = 3,
+        Vendor = 4,
+        Registered = 5
     }
 }

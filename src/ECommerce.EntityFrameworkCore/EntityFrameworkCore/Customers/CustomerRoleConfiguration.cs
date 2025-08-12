@@ -19,7 +19,7 @@ namespace ECommerce.EntityFrameworkCore.Customers
 
             builder.Property(cr => cr.Name).HasMaxLength(255);
             builder.Property(cr => cr.SystemName).HasMaxLength(255);
-            builder.Property(cr => cr.DefaultTaxDisplayType).IsRequired();
+            builder.Property(cr => cr.DefaultTaxDisplayType).IsRequired(false);
             builder.Property(cr => cr.PurchasedWithProductId).IsRequired(false);
 
             builder.HasMany(cr=>cr.CustomerCustomerRoles)

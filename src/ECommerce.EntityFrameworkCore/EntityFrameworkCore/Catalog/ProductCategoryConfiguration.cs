@@ -26,7 +26,7 @@ namespace ECommerce.EntityFrameworkCore.Catalog
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(pc => pc.Category)
-                .WithMany()  // Assuming Category does not track ProductCategories, adjust if it does
+                .WithMany(c => c.ProductCategories)
                 .HasForeignKey(pc => pc.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

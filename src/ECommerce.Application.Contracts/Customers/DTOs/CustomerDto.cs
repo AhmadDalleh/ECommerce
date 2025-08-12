@@ -17,7 +17,8 @@ namespace ECommerce.Customers.DTOs
         public CustomerType Type { get; set; }
 
         public List<Guid> RoleIds { get; set; }
-
-        public List<CustomerAddressDto> CustomerAddresses { get; set; }
+        public List<CustomerRoleDto> Roles { get; set; } = new();
+        public List<CustomerAddressDto> CustomerAddresses { get; set; } = new();
+        public List<CustomerPasswordDto> CustomerPasswords { get; set; } = new();
     }
 }

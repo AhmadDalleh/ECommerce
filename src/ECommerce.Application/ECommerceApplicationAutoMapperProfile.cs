@@ -20,10 +20,21 @@ public class ECommerceApplicationAutoMapperProfile : Profile
 
         CreateMap<CreateUpdateAddressDto, Address>();
 
-        CreateMap<CustomerAddress, CustomerAddressDto>();
-
         CreateMap<CustomerPassword, CustomerPasswordDto>();
 
         CreateMap<CreateCustomerPasswordDto, CustomerPassword>();
+        CreateMap<UpdateCustomerPasswordDto, CustomerPassword>();
+
+        // Customer Role mappings
+        CreateMap<CustomerRole, CustomerRoleDto>();
+        CreateMap<CreateUpdateCustomerRoleDto, CustomerRole>();
+
+        // Customer-CustomerRole mappings
+        CreateMap<CustomerCustomerRole, CustomerCustomerRoleDto>();
+        CreateMap<CreateUpdateCustomerCustomerRoleDto, CustomerCustomerRole>();
+
+        // Customer-Address mappings
+        CreateMap<CustomerAddress, CustomerAddressDto>();
+        CreateMap<CreateUpdateCustomerAddressDto, CustomerAddress>();
     }
 }

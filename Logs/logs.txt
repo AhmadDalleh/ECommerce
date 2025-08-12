@@ -1,0 +1,110 @@
+2025-08-12 03:52:51.866 +03:00 [INF] Started database migrations...
+2025-08-12 03:52:51.883 +03:00 [INF] Migrating schema for host database...
+2025-08-12 03:52:53.440 +03:00 [WRN] Entity 'Category' has a global query filter defined and is the required end of a relationship with the entity 'ProductCategory'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 03:52:53.441 +03:00 [WRN] Entity 'Product' has a global query filter defined and is the required end of a relationship with the entity 'ProductPhoto'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 03:52:53.441 +03:00 [WRN] Entity 'CustomerRole' has a global query filter defined and is the required end of a relationship with the entity 'CustomerCustomerRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:02:40.353 +03:00 [INF] Started database migrations...
+2025-08-12 04:02:40.361 +03:00 [INF] Migrating schema for host database...
+2025-08-12 04:02:41.686 +03:00 [WRN] Entity 'Category' has a global query filter defined and is the required end of a relationship with the entity 'ProductCategory'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:02:41.686 +03:00 [WRN] Entity 'Product' has a global query filter defined and is the required end of a relationship with the entity 'ProductPhoto'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:02:41.686 +03:00 [WRN] Entity 'CustomerRole' has a global query filter defined and is the required end of a relationship with the entity 'CustomerCustomerRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:03:38.617 +03:00 [INF] Started database migrations...
+2025-08-12 04:03:38.627 +03:00 [INF] Migrating schema for host database...
+2025-08-12 04:03:40.972 +03:00 [WRN] Entity 'Category' has a global query filter defined and is the required end of a relationship with the entity 'ProductCategory'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:03:40.973 +03:00 [WRN] Entity 'Product' has a global query filter defined and is the required end of a relationship with the entity 'ProductPhoto'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:03:40.973 +03:00 [WRN] Entity 'CustomerRole' has a global query filter defined and is the required end of a relationship with the entity 'CustomerCustomerRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:03:41.774 +03:00 [INF] Executing host database seed...
+2025-08-12 04:03:44.796 +03:00 [INF] Seeding Customer module data...
+2025-08-12 04:03:45.113 +03:00 [INF] Customer module data seeding completed successfully!
+2025-08-12 04:03:45.558 +03:00 [ERR] Failed executing DbCommand (20ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = DateTime2), @p7='?' (Size = 255), @p8='?' (Size = 100), @p9='?' (Size = 100), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (Size = 4000), @p17='?' (Size = 4000), @p18='?' (DbType = DateTime2), @p19='?' (Size = 255), @p20='?' (Size = 100), @p21='?' (Size = 100), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (Size = 4000), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (DbType = DateTime2), @p31='?' (Size = 255), @p32='?' (Size = 100), @p33='?' (Size = 100), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (Size = 4000), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (DbType = DateTime2), @p43='?' (Size = 255), @p44='?' (Size = 100), @p45='?' (Size = 100), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Boolean), @p50='?' (Size = 40), @p51='?' (DbType = DateTime2), @p52='?' (DbType = Guid), @p53='?' (DbType = Int32), @p54='?' (DbType = Guid), @p55='?' (DbType = DateTime2), @p56='?' (DbType = Boolean), @p57='?' (Size = 4000), @p58='?' (DbType = Boolean), @p59='?' (DbType = Boolean), @p60='?' (DbType = DateTime2), @p61='?' (DbType = Guid), @p62='?' (Size = 255), @p63='?' (DbType = Int32), @p64='?' (DbType = Guid), @p65='?' (Size = 255), @p66='?' (DbType = Boolean), @p67='?' (DbType = Guid), @p68='?' (DbType = Boolean), @p69='?' (Size = 40), @p70='?' (DbType = DateTime2), @p71='?' (DbType = Guid), @p72='?' (DbType = Int32), @p73='?' (DbType = Guid), @p74='?' (DbType = DateTime2), @p75='?' (DbType = Boolean), @p76='?' (Size = 4000), @p77='?' (DbType = Boolean), @p78='?' (DbType = Boolean), @p79='?' (DbType = DateTime2), @p80='?' (DbType = Guid), @p81='?' (Size = 255), @p82='?' (DbType = Int32), @p83='?' (DbType = Guid), @p84='?' (Size = 255), @p85='?' (DbType = Boolean), @p86='?' (DbType = Guid), @p87='?' (DbType = Boolean), @p88='?' (Size = 40), @p89='?' (DbType = DateTime2), @p90='?' (DbType = Guid), @p91='?' (DbType = Int32), @p92='?' (DbType = Guid), @p93='?' (DbType = DateTime2), @p94='?' (DbType = Boolean), @p95='?' (Size = 4000), @p96='?' (DbType = Boolean), @p97='?' (DbType = Boolean), @p98='?' (DbType = DateTime2), @p99='?' (DbType = Guid), @p100='?' (Size = 255), @p101='?' (DbType = Int32), @p102='?' (DbType = Guid), @p103='?' (Size = 255), @p104='?' (DbType = Boolean), @p105='?' (DbType = Guid), @p106='?' (DbType = Boolean), @p107='?' (Size = 40), @p108='?' (DbType = DateTime2), @p109='?' (DbType = Guid), @p110='?' (DbType = Int32), @p111='?' (DbType = Guid), @p112='?' (DbType = DateTime2), @p113='?' (DbType = Boolean), @p114='?' (Size = 4000), @p115='?' (DbType = Boolean), @p116='?' (DbType = Boolean), @p117='?' (DbType = DateTime2), @p118='?' (DbType = Guid), @p119='?' (Size = 255), @p120='?' (DbType = Int32), @p121='?' (DbType = Guid), @p122='?' (Size = 255), @p123='?' (DbType = Boolean), @p124='?' (DbType = Guid), @p125='?' (DbType = DateTime2), @p126='?' (Size = 255), @p127='?' (Size = 100), @p128='?' (Size = 512), @p129='?' (DbType = Int32), @p130='?' (DbType = Guid), @p131='?' (DbType = DateTime2), @p132='?' (Size = 255), @p133='?' (Size = 100), @p134='?' (Size = 512), @p135='?' (DbType = Int32), @p136='?' (DbType = Guid), @p137='?' (DbType = DateTime2), @p138='?' (Size = 255), @p139='?' (Size = 100), @p140='?' (Size = 512), @p141='?' (DbType = Int32), @p142='?' (DbType = Guid), @p143='?' (DbType = DateTime2), @p144='?' (Size = 255), @p145='?' (Size = 100), @p146='?' (Size = 512), @p147='?' (DbType = Int32), @p148='?' (DbType = Guid), @p149='?' (DbType = DateTime2), @p150='?' (Size = 255), @p151='?' (Size = 100), @p152='?' (Size = 512), @p153='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Address] ([Id], [Address1], [Address2], [City], [Company], [Country], [CreatedOnUtc], [Email], [FirstName], [LastName], [PhoneNumber], [ZipPostalCode])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43, @p44, @p45, @p46, @p47);
+MERGE [CustomerRoles] USING (
+VALUES (@p48, @p49, @p50, @p51, @p52, @p53, @p54, @p55, @p56, @p57, @p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65, @p66, 0),
+(@p67, @p68, @p69, @p70, @p71, @p72, @p73, @p74, @p75, @p76, @p77, @p78, @p79, @p80, @p81, @p82, @p83, @p84, @p85, 1),
+(@p86, @p87, @p88, @p89, @p90, @p91, @p92, @p93, @p94, @p95, @p96, @p97, @p98, @p99, @p100, @p101, @p102, @p103, @p104, 2),
+(@p105, @p106, @p107, @p108, @p109, @p110, @p111, @p112, @p113, @p114, @p115, @p116, @p117, @p118, @p119, @p120, @p121, @p122, @p123, 3)) AS i ([Id], [Active], [ConcurrencyStamp], [CreationTime], [CreatorId], [DefaultTaxDisplayType], [DeleterId], [DeletionTime], [EnablePasswordLifeTime], [ExtraProperties], [FreeShipping], [IsSystemRole], [LastModificationTime], [LastModifierId], [Name], [OverrideTaxDisplayType], [PurchasedWithProductId], [SystemName], [TaxExempt], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Id], [Active], [ConcurrencyStamp], [CreationTime], [CreatorId], [DefaultTaxDisplayType], [DeleterId], [DeletionTime], [EnablePasswordLifeTime], [ExtraProperties], [FreeShipping], [IsSystemRole], [LastModificationTime], [LastModifierId], [Name], [OverrideTaxDisplayType], [PurchasedWithProductId], [SystemName], [TaxExempt])
+VALUES (i.[Id], i.[Active], i.[ConcurrencyStamp], i.[CreationTime], i.[CreatorId], i.[DefaultTaxDisplayType], i.[DeleterId], i.[DeletionTime], i.[EnablePasswordLifeTime], i.[ExtraProperties], i.[FreeShipping], i.[IsSystemRole], i.[LastModificationTime], i.[LastModifierId], i.[Name], i.[OverrideTaxDisplayType], i.[PurchasedWithProductId], i.[SystemName], i.[TaxExempt])
+OUTPUT INSERTED.[IsDeleted], i._Position;
+MERGE [Customers] USING (
+VALUES (@p124, @p125, @p126, @p127, @p128, @p129, 0),
+(@p130, @p131, @p132, @p133, @p134, @p135, 1),
+(@p136, @p137, @p138, @p139, @p140, @p141, 2),
+(@p142, @p143, @p144, @p145, @p146, @p147, 3),
+(@p148, @p149, @p150, @p151, @p152, @p153, 4)) AS i ([Id], [CreatedOnUtc], [Email], [Name], [PasswordHash], [Type], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Id], [CreatedOnUtc], [Email], [Name], [PasswordHash], [Type])
+VALUES (i.[Id], i.[CreatedOnUtc], i.[Email], i.[Name], i.[PasswordHash], i.[Type])
+OUTPUT INSERTED.[IsActive], i._Position;
+2025-08-12 04:03:45.593 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'ECommerce.EntityFrameworkCore.ECommerceDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'Company', table 'ECommerce.dbo.Address'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:bdfa1d51-2b10-4e6f-adfc-a326e459f2b8
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'Company', table 'ECommerce.dbo.Address'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:bdfa1d51-2b10-4e6f-adfc-a326e459f2b8
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Volo.Abp.EntityFrameworkCore.AbpDbContext`1.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-08-12 04:06:18.630 +03:00 [INF] Started database migrations...
+2025-08-12 04:06:18.641 +03:00 [INF] Migrating schema for host database...
+2025-08-12 04:06:19.898 +03:00 [WRN] Entity 'Category' has a global query filter defined and is the required end of a relationship with the entity 'ProductCategory'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:06:19.898 +03:00 [WRN] Entity 'Product' has a global query filter defined and is the required end of a relationship with the entity 'ProductPhoto'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:06:19.899 +03:00 [WRN] Entity 'CustomerRole' has a global query filter defined and is the required end of a relationship with the entity 'CustomerCustomerRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2025-08-12 04:06:20.764 +03:00 [INF] Executing host database seed...
+2025-08-12 04:06:25.454 +03:00 [INF] Seeding Customer module data...
+2025-08-12 04:06:26.041 +03:00 [INF] Customer module data seeding completed successfully!
+2025-08-12 04:06:27.601 +03:00 [INF] Successfully completed host database migrations.
+2025-08-12 04:06:28.270 +03:00 [INF] Successfully completed all database migrations.
+2025-08-12 04:06:28.270 +03:00 [INF] You can safely end this process...

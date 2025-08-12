@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace ECommerce.Migrations
 {
     [DbContext(typeof(ECommerceDbContext))]
-    [Migration("20250811103559_AddedCategoryEntities")]
-    partial class AddedCategoryEntities
+    [Migration("20250812003641_InitAppSchema")]
+    partial class InitAppSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,17 +208,12 @@ namespace ECommerce.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("CategoryId1");
 
                     b.HasIndex("ProductId", "CategoryId")
                         .IsUnique();
@@ -322,7 +317,9 @@ namespace ECommerce.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -331,7 +328,8 @@ namespace ECommerce.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -343,15 +341,21 @@ namespace ECommerce.Migrations
 
             modelBuilder.Entity("ECommerce.Customers.CustomerAddress", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CustomerId", "AddressId");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("CustomerId", "AddressId")
+                        .IsUnique();
 
                     b.ToTable("Customer_Address_Mapping", (string)null);
                 });
@@ -390,9 +394,6 @@ namespace ECommerce.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CustomerId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -406,8 +407,6 @@ namespace ECommerce.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("CustomerId1");
 
                     b.ToTable("CustomersPasswords", (string)null);
                 });
@@ -2289,14 +2288,10 @@ namespace ECommerce.Migrations
             modelBuilder.Entity("ECommerce.Catalog.ProductCategory", b =>
                 {
                     b.HasOne("ECommerce.Catalog.Category", "Category")
-                        .WithMany()
+                        .WithMany("ProductCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ECommerce.Catalog.Category", null)
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("CategoryId1");
 
                     b.HasOne("ECommerce.Catalog.Product", "Product")
                         .WithMany("ProductCategories")
@@ -2322,17 +2317,21 @@ namespace ECommerce.Migrations
 
             modelBuilder.Entity("ECommerce.Customers.CustomerAddress", b =>
                 {
-                    b.HasOne("ECommerce.Customers.Address", null)
+                    b.HasOne("ECommerce.Customers.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Customers.Customer", null)
-                        .WithMany()
+                    b.HasOne("ECommerce.Customers.Customer", "Customer")
+                        .WithMany("CustomerAddresses")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ECommerce.Customers.CustomerCustomerRole", b =>
@@ -2356,15 +2355,13 @@ namespace ECommerce.Migrations
 
             modelBuilder.Entity("ECommerce.Customers.CustomerPassword", b =>
                 {
-                    b.HasOne("ECommerce.Customers.Customer", null)
-                        .WithMany()
+                    b.HasOne("ECommerce.Customers.Customer", "Customer")
+                        .WithMany("CustomerPasswords")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Customers.Customer", null)
-                        .WithMany("CustomerPasswords")
-                        .HasForeignKey("CustomerId1");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2523,6 +2520,8 @@ namespace ECommerce.Migrations
 
             modelBuilder.Entity("ECommerce.Customers.Customer", b =>
                 {
+                    b.Navigation("CustomerAddresses");
+
                     b.Navigation("CustomerCustomerRoles");
 
                     b.Navigation("CustomerPasswords");
