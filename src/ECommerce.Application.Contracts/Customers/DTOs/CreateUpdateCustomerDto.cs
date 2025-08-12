@@ -26,7 +26,7 @@ namespace ECommerce.Customers.DTOs
         public bool IsActive { get; set; } = true;
 
         public List<Guid> RoleIds { get; set; } = new();
-        public List<Guid> CustomerAddresses { get; set; } = new();
+        public List<Guid> AddressIds { get; set; } = new();
 
         public DateTime CreatedOnUtc { get; set; } = DateTime.UtcNow;
     }

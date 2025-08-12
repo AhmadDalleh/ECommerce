@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ECommerce.Catalog.DTOs;
+using ECommerce.Catalog;
 using ECommerce.Customers;
 using ECommerce.Customers.DTOs;
 
@@ -25,5 +27,19 @@ public class ECommerceApplicationAutoMapperProfile : Profile
         CreateMap<CustomerPassword, CustomerPasswordDto>();
 
         CreateMap<CreateCustomerPasswordDto, CustomerPassword>();
+
+
+        CreateMap<Category, CategoryDto>();
+        CreateMap<CreateUpdateCategoryDto, Category>();
+
+        CreateMap<Product, ProductDto>();
+        CreateMap<CreateUpdateProductDto, Product>();
+
+        CreateMap<ProductCategory, ProductCategoryDto>();
+        CreateMap<CreateUpdateProductCategoryDto, ProductCategory>();
+
+        CreateMap<ProductPhoto, ProductPhotoDto>();
+        CreateMap<CreateUpdateProductPhotoDto, ProductPhoto>();
+
     }
 }

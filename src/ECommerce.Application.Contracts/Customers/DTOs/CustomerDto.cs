@@ -16,8 +16,8 @@ namespace ECommerce.Customers.DTOs
         public DateTime CreatedOnUtc { get; set; }
         public CustomerType Type { get; set; }
 
-        public List<Guid> RoleIds { get; set; }
+        public List<Guid> RoleIds { get; set; } = new List<Guid>();
 
-        public List<CustomerAddressDto> CustomerAddresses { get; set; }
+        public List<Guid> AddressIds { get; set; } = new List<Guid>();
     }
 }
