@@ -1,5 +1,6 @@
 ﻿using ECommerce.Catalog;
 using ECommerce.Customers;
+using ECommerce.Orders;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -77,6 +78,12 @@ public class ECommerceDbContext :
 
     #endregion
 
+    #region Order Entities
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+
+    #endregion
+
     public ECommerceDbContext(DbContextOptions<ECommerceDbContext> options)
         : base(options)
     {
@@ -122,6 +129,11 @@ public class ECommerceDbContext :
         builder.ApplyConfiguration(new Catalog.ProductConfiguration());
         builder.ApplyConfiguration(new Catalog.ProductPhotoConfiguration());
         builder.ApplyConfiguration(new Catalog.ProductCategoryConfiguration());
+        #endregion
+
+        #region Order Tables Configurations 
+        builder.ApplyConfiguration(new Orders.OrderConfiguration());
+        builder.ApplyConfiguration(new Orders.OrderItemConfiguration());
         #endregion
 
     }
