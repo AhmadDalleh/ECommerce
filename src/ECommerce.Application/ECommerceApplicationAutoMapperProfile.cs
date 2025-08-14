@@ -3,6 +3,8 @@ using ECommerce.Catalog.DTOs;
 using ECommerce.Catalog;
 using ECommerce.Customers;
 using ECommerce.Customers.DTOs;
+using ECommerce.Orders.DTOs;
+using ECommerce.Orders;
 
 namespace ECommerce;
 
@@ -14,6 +16,7 @@ public class ECommerceApplicationAutoMapperProfile : Profile
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
 
+        #region Cusomer Mappers 
         CreateMap<Customer, CustomerDto>();
 
         CreateMap<CreateUpdateCustomerDto, Customer>();
@@ -28,6 +31,10 @@ public class ECommerceApplicationAutoMapperProfile : Profile
 
         CreateMap<CreateCustomerPasswordDto, CustomerPassword>();
 
+        #endregion
+
+
+        #region Catlog Mappers 
 
         CreateMap<Category, CategoryDto>();
         CreateMap<CreateUpdateCategoryDto, Category>();
@@ -40,6 +47,17 @@ public class ECommerceApplicationAutoMapperProfile : Profile
 
         CreateMap<ProductPhoto, ProductPhotoDto>();
         CreateMap<CreateUpdateProductPhotoDto, ProductPhoto>();
+
+        #endregion
+
+        #region Order Mappers 
+        CreateMap<Order, OrderDto>();
+        CreateMap<CreateUpdateOrderDto, Order>();
+
+        CreateMap<OrderItem, OrderItemDto>();
+        CreateMap<CreateUpdateOrderItemDto, OrderItem>();
+
+        #endregion
 
     }
 }

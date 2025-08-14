@@ -1,0 +1,17 @@
+﻿using ECommerce.Orders.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+
+namespace ECommerce.Orders
+{
+    public interface IOrderAppService : 
+        ICrudAppService<OrderDto,int,PagedAndSortedResultRequestDto,CreateUpdateOrderDto>
+    {
+        Task<OrderDto> RecalculateAsync(int id);
+    }
+}
