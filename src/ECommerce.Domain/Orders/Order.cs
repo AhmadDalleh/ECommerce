@@ -33,13 +33,13 @@ namespace ECommerce.Orders
         private Order() { OrderItems = new List<OrderItem>(); }
 
 
-        public Order(int id, Guid customerId) : base(id)
+        public Order(int id, Guid customerId, ICollection<OrderItem> orderItems) : base(id)
         {
             CustomerId = customerId;
             Status = OrderStatus.Pending;
             CreatedOnUtc = DateTime.UtcNow;
-            OrderItems = new List<OrderItem>();
             OrderTotal = 0m;
+            OrderItems = orderItems;
         }
         #endregion
 

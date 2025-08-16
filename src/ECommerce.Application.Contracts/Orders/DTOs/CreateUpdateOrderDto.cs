@@ -13,6 +13,6 @@ namespace ECommerce.Orders.DTOs
 
         public OrderStatus OrderStatus { get; set; }
 
-        public List<CreateUpdateOrderDto> OrderItems { get; set; } = new();
+        public List<CreateUpdateOrderItemDto> OrderItems { get; set; } = new();
     }
 }
