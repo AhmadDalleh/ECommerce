@@ -13,7 +13,6 @@ namespace ECommerce.Shopping
         Task<ShoppingCartDto> GetAsync(CheckOutDto input);
         Task<ShoppingCartDto> AddItemAsync(AddToCartDto input);
         Task<ShoppingCartDto> UpdateItemAsync(UpdateCartItemDto input);
-
         Task RemoveItemAsync(UpdateCartItemDto input);
         Task ClearAsync(CheckOutDto input);
 

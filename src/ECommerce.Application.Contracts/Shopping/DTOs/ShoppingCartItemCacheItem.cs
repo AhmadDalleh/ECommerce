@@ -10,7 +10,7 @@ namespace ECommerce.Shopping.DTOs
     public class ShoppingCartItemCacheItem
     {
         public int ProductId {  get; set; }
-        public string Quantiyt { get; set; }
+        public int Quantity { get; set; }
         public DateTime AddedOnUtc { get; set; }
     }
 }
