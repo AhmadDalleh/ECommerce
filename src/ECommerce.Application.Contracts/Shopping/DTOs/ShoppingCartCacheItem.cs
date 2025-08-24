@@ -9,6 +9,6 @@ namespace ECommerce.Shopping.DTOs
     [Serializable]
     public class ShoppingCartCacheItem
     {
-        public List<ShoppingCartItemCacheItem> Items { get; set; }
+        public List<ShoppingCartItemCacheItem> Items { get; set; } = new ();
     }
 }

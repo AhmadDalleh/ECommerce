@@ -68,8 +68,9 @@ namespace ECommerce.Shopping
         public async Task<ShoppingCartDto> GetAsync(CheckOutDto input)
         {
             var cart = await _cache.GetAsync(CartCacheKey.ForCustomer(input.CustomerId))
-                ?? new ShoppingCartCacheItem();
-            return await BuildCartDtoAsync(input.CustomerId, cart); 
+                       ?? new ShoppingCartCacheItem();
+
+            return await BuildCartDtoAsync(input.CustomerId, cart);
 
         }
 
@@ -91,9 +92,9 @@ namespace ECommerce.Shopping
             var key = CartCacheKey.ForCustomer(input.CustomerId);
             var cart = await _cache.GetAsync(key) ?? new ShoppingCartCacheItem();
 
-            var existing = cart.Items.FirstOrDefault(i=>i.ProductId == input.ProductId);
-            if(existing == null)
-                return await BuildCartDtoAsync(input.CustomerId,cart);
+            var existing = cart.Items.FirstOrDefault(i => i.ProductId == input.ProductId);
+            if (existing == null)
+                return await BuildCartDtoAsync(input.CustomerId, cart);
 
             if (input.Quantity <= 0)
             {
@@ -109,11 +110,17 @@ namespace ECommerce.Shopping
             });
             return await BuildCartDtoAsync(input.CustomerId, cart);
         }
+        public async Task<int> DebugCartCountAsync(Guid customerId)
+        {
+            var key = CartCacheKey.ForCustomer(customerId);
+            var savedCart = await _cache.GetAsync(key);
+            return savedCart?.Items.Count ?? 0;
+        }
 
         private async Task<ShoppingCartDto> BuildCartDtoAsync(Guid customerId, ShoppingCartCacheItem cart)
         {
             var result = new ShoppingCartDto { CustomerId = customerId };
-            if(cart.Items.Count != null)
+            if(cart.Items.Count == 0)
             {
                 return result;
             }

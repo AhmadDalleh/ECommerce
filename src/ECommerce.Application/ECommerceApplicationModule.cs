@@ -1,5 +1,7 @@
-﻿using Volo.Abp.Account;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -17,6 +19,7 @@ namespace ECommerce;
     typeof(AbpPermissionManagementApplicationModule),
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpFeatureManagementApplicationModule),
+    typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpSettingManagementApplicationModule)
     )]
 public class ECommerceApplicationModule : AbpModule
@@ -26,6 +29,11 @@ public class ECommerceApplicationModule : AbpModule
         Configure<AbpAutoMapperOptions>(options =>
         {
             options.AddMaps<ECommerceApplicationModule>();
+        });
+
+        context.Services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = "localhost:6379"; // your Redis server
         });
     }
 }
