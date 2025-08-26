@@ -1,4 +1,6 @@
-﻿using ECommerce.Orders.DTOs;
+﻿using AutoMapper;
+using ECommerce.Orders.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,6 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Orders
 {
@@ -17,9 +18,12 @@ namespace ECommerce.Orders
     {
 
         private readonly IRepository<OrderItem, int> _orderItemRepo;
-        public OrderAppService(IRepository<Order, int> repository, IRepository<OrderItem, int> orderItemRepo) : base(repository)
+        private readonly IMapper _mapper;
+
+        public OrderAppService(IRepository<Order, int> repository, IRepository<OrderItem, int> orderItemRepo, IMapper mapper) : base(repository)
         {
             _orderItemRepo = orderItemRepo;
+            _mapper = mapper;
         }
 
 
@@ -31,18 +35,31 @@ namespace ECommerce.Orders
         }
 
 
-        public override async Task<OrderDto> CreateAsyc(CreateUpdateOrderDto input)
+        public override async Task<OrderDto> CreateAsync(CreateUpdateOrderDto input)
         {
-            var item = await Repository.InsertAsync(new Order(0, input.CustomerId), autoSave: true);
-
-            foreach(var i in input.OrderItems)
+            var entity = await Repository.InsertAsync(new Order(0, input.CustomerId), autoSave: true);
+            foreach(CreateUpdateOrderItemDto i in input.OrderItems)
             {
-                var item = new OrderItem(0, i.orderId)
+                var item = new OrderItem(0, entity.Id, i.ProductId, i.Quantity, i.UnitPrice);
+
+                await _orderItemRepo.InsertAsync(item, autoSave: true);
+
             }
+            var queryable = await Repository.GetQueryableAsync();
+            entity = await queryable
+                .Include(o => o.OrderItems)
+                .FirstAsync(o => o.Id == entity.Id);
+            entity.RecalculateTotal();
+            return _mapper.Map<OrderDto>(entity); // ✅ Map directly
         }
-        public Task<OrderDto> RecalculateAsync(int id)
+
+        public async Task<OrderDto> RecalculateAsync(int id)
         {
-            throw new NotImplementedException();
+            var queryable = await Repository.GetQueryableAsync();
+            var order = await queryable.Include(o => o.OrderItems).FirstAsync(o => o.Id == id);
+            order.RecalculateTotal();
+            await Repository.UpdateAsync(order, autoSave: true);
+            return _mapper.Map<OrderDto>(order); // ✅ Map directly
         }
     }
 }
