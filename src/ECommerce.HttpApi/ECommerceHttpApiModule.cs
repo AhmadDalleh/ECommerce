@@ -10,6 +10,8 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.Caching.StackExchangeRedis;
+using Volo.Abp.Caching;
 
 namespace ECommerce;
 
@@ -20,7 +22,8 @@ namespace ECommerce;
     typeof(AbpPermissionManagementHttpApiModule),
     typeof(AbpTenantManagementHttpApiModule),
     typeof(AbpFeatureManagementHttpApiModule),
-    typeof(AbpSettingManagementHttpApiModule)
+    typeof(AbpSettingManagementHttpApiModule),
+    typeof(AbpCachingStackExchangeRedisModule)
     )]
 public class ECommerceHttpApiModule : AbpModule
 {
@@ -31,6 +34,11 @@ public class ECommerceHttpApiModule : AbpModule
         Configure<AbpExceptionHandlingOptions>(options =>
         {
             options.SendExceptionsDetailsToClients = true;
+        });
+
+        Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = "ECommerce:"; // keep your cache keys tidy
         });
     }
 

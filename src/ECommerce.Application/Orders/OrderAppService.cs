@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Domain.Entities;
+using AutoMapper;
 
 namespace ECommerce.Orders
 {
@@ -34,32 +37,37 @@ namespace ECommerce.Orders
             return q.Include(o=>o.OrderItems).AsQueryable();
         }
 
-
-        public override async Task<OrderDto> CreateAsync(CreateUpdateOrderDto input)
+        public override async Task<OrderDto> CreateAsync(CreateUpdateOrderDto input)  
         {
-            var entity = await Repository.InsertAsync(new Order(0, input.CustomerId), autoSave: true);
-            foreach(CreateUpdateOrderItemDto i in input.OrderItems)
+           var items = new List<OrderItem>();
+
+           var entity = await Repository.InsertAsync(new Order(0, input.CustomerId, items), autoSave: true);
+
+            foreach (var i in input.OrderItems)
             {
-                var item = new OrderItem(0, entity.Id, i.ProductId, i.Quantity, i.UnitPrice);
-
-                await _orderItemRepo.InsertAsync(item, autoSave: true);
-
+                items.Add(new OrderItem(0, entity.Id, i.ProductId, i.Quantity, i.UnitPrice));
             }
+            await _orderItemRepo.InsertManyAsync(items,autoSave: true);
+
+            entity = await Repository.InsertAsync(new Order(0,input.CustomerId, items), autoSave: true);
+
             var queryable = await Repository.GetQueryableAsync();
             entity = await queryable
                 .Include(o => o.OrderItems)
                 .FirstAsync(o => o.Id == entity.Id);
             entity.RecalculateTotal();
-            return _mapper.Map<OrderDto>(entity); // ✅ Map directly
-        }
 
+            await Repository.UpdateAsync(entity,autoSave:true);
+
+            return await GetAsync(entity.Id);
+        }
         public async Task<OrderDto> RecalculateAsync(int id)
         {
             var queryable = await Repository.GetQueryableAsync();
-            var order = await queryable.Include(o => o.OrderItems).FirstAsync(o => o.Id == id);
-            order.RecalculateTotal();
-            await Repository.UpdateAsync(order, autoSave: true);
-            return _mapper.Map<OrderDto>(order); // ✅ Map directly
+            var order = await queryable.Include(o=>o.OrderItems).FirstAsync(o => o.Id == id);
+            await Repository.UpdateAsync(order,autoSave:true);
+            return await GetAsync(id);
+            
         }
     }
 }
