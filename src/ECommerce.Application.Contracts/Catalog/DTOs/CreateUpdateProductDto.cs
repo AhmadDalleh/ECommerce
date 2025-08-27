@@ -29,9 +29,5 @@ namespace ECommerce.Catalog.DTOs
 
         [Required]
         public bool Published { get; set; }
-
-        [MaxLength(64)]
-        [Required]
-        public string Sku {  get; set; }
     }
 }
