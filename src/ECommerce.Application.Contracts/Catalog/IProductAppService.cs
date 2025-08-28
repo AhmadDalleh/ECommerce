@@ -9,7 +9,7 @@ using Volo.Abp.Application.Services;
 
 namespace ECommerce.Catalog
 {
-    public interface IProductAppService : ICrudAppService<ProductDto,int,PagedAndSortedResultRequestDto,CreateUpdateProductDto>
+    public interface IProductAppService : ICrudAppService<ProductDto,int,PagedAndSortedResultRequestDto,CreateUpdateProductDto,UpdateProductDto>
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ECommerce.Orders.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace ECommerce.Catalog.DTOs
 
         public bool Published { get; set; }
 
-        public string Sku {  get; set; }
+        public string? Sku {  get; set; }
+
+        public List<ProductPhotoDto>? ProductPhotos { get; set; }
     }
 }

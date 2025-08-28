@@ -1,5 +1,4 @@
-﻿using ECommerce.Orders.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Catalog.DTOs
 {
-    public class CreateUpdateProductDto
+    public class UpdateProductDto
     {
         [Required]
         [MaxLength(200)]
@@ -24,13 +23,13 @@ namespace ECommerce.Catalog.DTOs
 
         [Required]
         public decimal Price { get; set; }
-        
+
         [Required]
         public int StockQuantity { get; set; }
 
         [Required]
         public bool Published { get; set; }
 
-        public List<CreateUpdateProductWithPhoto> ProductPhotos { get; set; } = new();
+        public List<CreateUpdateProductPhotoDto> ProductPhotos { get; set; } = new();
     }
 }

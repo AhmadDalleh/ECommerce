@@ -37,7 +37,9 @@ namespace ECommerce.EntityFrameworkCore.Catalog
                 .IsRequired();
 
             builder.Property(p => p.Sku)
+                .IsRequired(false)
                 .HasMaxLength(64);
+                
 
 
             // Relationships
