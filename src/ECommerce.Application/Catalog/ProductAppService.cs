@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using ECommerce.Catalog.DTOs;
 using ECommerce.Orders;
+using ECommerce.Shared;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -26,20 +29,24 @@ namespace ECommerce.Catalog
         , IProductAppService
     {
         private readonly IRepository<Product, int> _productRepo;
-        private readonly IRepository<ProductPhoto,int> _productPhotoRepo;
+        private readonly IRepository<ProductPhoto, int> _productPhotoRepo;
+        private readonly IRepository<ProductCategory, int> _productCategoryRepo;
         private readonly IMapper _mapper;
-        public ProductAppService(IRepository<Product, int> repository, IMapper mapper, IRepository<ProductPhoto, int> productPhotoRepo) : base(repository)
+        private readonly IImageHandlerAppService _imageHandler;
+        public ProductAppService(IRepository<Product, int> repository, IMapper mapper, IRepository<ProductPhoto, int> productPhotoRepo, IImageHandlerAppService imageHandler, IRepository<ProductCategory, int> productCategoryRepo) : base(repository)
         {
             _productRepo = repository;
             _mapper = mapper;
             _productPhotoRepo = productPhotoRepo;
+            _imageHandler = imageHandler;
+            _productCategoryRepo = productCategoryRepo;
         }
 
         public override async Task<PagedResultDto<ProductDto>> GetListAsync(PagedAndSortedResultRequestDto input)
         {
-          
+
             var queryable = await _productRepo.GetQueryableAsync();
-            queryable = queryable.Include(o => o.ProductPhotos);
+            queryable = queryable.Include(o => o.ProductPhotos).Include(o => o.ProductCategories);
             queryable = queryable.OrderBy(input.Sorting ?? "Id DESC");
 
             var totalCount = await AsyncExecuter.CountAsync(queryable);
@@ -47,11 +54,16 @@ namespace ECommerce.Catalog
             var products = await AsyncExecuter.ToListAsync(
             queryable.Skip(input.SkipCount).Take(input.MaxResultCount));
 
-            var proudctDtos = _mapper.Map<List<Product>,List<ProductDto>>(products);
+            var productDtos = _mapper.Map<List<Product>, List<ProductDto>>(products);
+
+            foreach (var (entity, dto) in products.Zip(productDtos, (e, d) => (e, d)))
+            {
+                dto.CategoryIds = entity.ProductCategories.Select(pc => pc.CategoryId).ToList();
+            }
 
             return new PagedResultDto<ProductDto>(
                 totalCount,
-                proudctDtos);
+                productDtos);
         }
 
         public override async Task<ProductDto> GetAsync(int id)
@@ -61,12 +73,15 @@ namespace ECommerce.Catalog
             var queryable = await _productRepo.GetQueryableAsync();
             product = await queryable
                 .Include(o => o.ProductPhotos)
+                .Include(o=> o.ProductCategories)   
                 .FirstAsync(o => o.Id == id);
 
-            return _mapper.Map<Product, ProductDto>(product);
-          
+            var dto = _mapper.Map<Product, ProductDto>(product);
+            dto.CategoryIds = product.ProductCategories.Select(pc => pc.CategoryId).ToList();
+            return dto;
+
         }
-        public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
+        public override async Task<ProductDto> CreateAsync([FromForm] CreateUpdateProductDto input)
         {
 
             //var entity = new Product(0, input.Name, input.ShortDescription, input.FullDescription, input.Price, input.StockQuantity, input.Published)
@@ -77,84 +92,184 @@ namespace ECommerce.Catalog
 
             //return _mapper.Map<ProductDto,Product >(entity);
 
+            var entity = await _productRepo.InsertAsync(
+                new Product(
+                    0, input.Name,
+                    input.ShortDescription,
+                    input.FullDescription,
+                    input.Price,
+                    input.StockQuantity,
+                    input.Published),
+                autoSave: true);
             var photos = new List<ProductPhoto>();
 
-            var entity = await _productRepo.InsertAsync(new Product(0, input.Name, input.ShortDescription, input.FullDescription, input.Price, input.StockQuantity, input.Published), autoSave: true);
+            if (input.UploadedPhotos != null && input.UploadedPhotos.Count > 0)
+            {
+                var uploadedUrls = await _imageHandler.UploadAsync(input.UploadedPhotos, entity.Name);
+                foreach (var (url, index) in uploadedUrls.Select((v, i) => (v, i)))
+                {
+                    photos.Add(new ProductPhoto(0, entity.Id, url, index));
+                }
+            }
 
             foreach (var i in input.ProductPhotos)
             {
                 photos.Add(new ProductPhoto(0, entity.Id, i.PictureUrl, i.DisplayOrder));
             }
-            
-            await _productPhotoRepo.InsertManyAsync(photos, autoSave: true);
+            if (photos.Any())
+                await _productPhotoRepo.InsertManyAsync(photos, autoSave: true);
 
-     
+            if (input.CategoryIds != null && input.CategoryIds.Any())
+            {
+                var productCategories = input.CategoryIds.Select(cid => new ProductCategory(0, entity.Id, cid)).ToList();
+                await _productCategoryRepo.InsertManyAsync(productCategories, autoSave: true);
+            }
 
             var queryable = await _productRepo.GetQueryableAsync();
             entity = await queryable
                 .Include(o => o.ProductPhotos)
+                .Include(p => p.ProductCategories)
                 .FirstAsync(o => o.Id == entity.Id);
-            
-            await Repository.UpdateAsync(entity, autoSave: true);
 
-            return await GetAsync(entity.Id);
+            var dto = _mapper.Map<Product, ProductDto>(entity);
+            dto.CategoryIds = entity.ProductCategories.Select(pc => pc.CategoryId).ToList();
+            return dto;
         }
 
-        public override async Task<ProductDto> UpdateAsync(int id, UpdateProductDto input)
+        public override async Task<ProductDto> UpdateAsync(int id, [FromForm] UpdateProductDto input)
         {
-            var queryable = await _productRepo.GetQueryableAsync();
-            var product = await queryable
-                .Include(p => p.ProductPhotos)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            //var queryable = await _productRepo.GetQueryableAsync();
+            //var product = await queryable
+            //    .Include(p => p.ProductPhotos)
+            //    .FirstOrDefaultAsync(p => p.Id == id);
+
+            //if (product == null)
+            //{
+            //    throw new EntityNotFoundException(typeof(Product), id);
+            //}
+
+            //product.SetDetails(input.Name, input.ShortDescription, input.FullDescription, input.Price, input.StockQuantity, input.Published);
+
+            //if (input.UploadedPhotos != null && input.UploadedPhotos.Count > 0)
+            //{
+            //    var uploadedUrls = await _imageHandler.UploadAsync(input.UploadedPhotos, product.Name);
+
+            //    foreach (var (url, index) in uploadedUrls.Select((v, i) => (v, i)))
+            //    {
+            //        var newPhoto = new ProductPhoto(0, product.Id, url, index);
+            //        await _productPhotoRepo.InsertAsync(newPhoto, autoSave: true);
+            //    }
+            //}
+
+
+            //var existingPhotos = product.ProductPhotos.ToList();
+
+            //var photosToRemove = existingPhotos
+            //    .Where(ep => input.ProductPhotos.All(ip => ip.ProductId != ep.Id))
+            //    .ToList();
+
+            //foreach (var photo in photosToRemove) 
+            //{
+            //    product.ProductPhotos.Remove(photo);
+            //    await _productPhotoRepo.DeleteAsync(photo);
+            //    _imageHandler.DeleteImageAsync(photo.PictureUrl); // delete physical file too
+
+            //}
+            //foreach (var dtoPhoto in input.ProductPhotos)
+            //{
+            //    var existingPhoto = existingPhotos.FirstOrDefault(p => p.Id == dtoPhoto.ProductId);
+
+            //    if(existingPhoto != null)
+            //    {
+            //        existingPhoto.Update(dtoPhoto.PictureUrl, dtoPhoto.DisplayOrder);
+            //    }
+
+            //}
+
+            //await _productRepo.UpdateAsync(product, autoSave: true);
+
+            //var updatedProduct = await _productRepo.WithDetailsAsync(x => x.ProductPhotos);
+
+            //var finalEntity = await updatedProduct.FirstAsync(x => x.Id == product.Id);
+
+            //return _mapper.Map<Product, ProductDto>(finalEntity);
+
+            var products = await _productRepo.WithDetailsAsync(
+                p => p.ProductPhotos,
+                p => p.ProductCategories
+            );
+
+            var product = products.FirstOrDefault(p => p.Id == id);
 
             if (product == null)
             {
                 throw new EntityNotFoundException(typeof(Product), id);
             }
 
-            product.SetDetails(input.Name, input.ShortDescription, input.FullDescription, input.Price, input.StockQuantity, input.Published);
+            product.SetDetails(
+                input.Name,
+                input.ShortDescription,
+                input.FullDescription,
+                input.Price,
+                input.StockQuantity,
+                input.Published
+            );
+
+            if(input.UploadedPhotos !=null && input.UploadedPhotos.Count > 0)
+            {
+                var uploadedUrls = await _imageHandler.UploadAsync(input.UploadedPhotos, product.Name);
+
+                foreach(var (url,index) in uploadedUrls.Select((v, i) => (v, i)))
+                {
+                    var newPhoto = new ProductPhoto(0, product.Id, url, index);
+                    await _productPhotoRepo.InsertAsync(newPhoto, autoSave: true);
+                }
+            }
 
             var existingPhotos = product.ProductPhotos.ToList();
 
             var photosToRemove = existingPhotos
-                .Where(ep => input.ProductPhotos.All(ip => ip.ProductId != ep.Id))
+                .Where(ep => input.ProductPhotos.All(ip => ip.ProductId != ep.Id)) // compare by Id
                 .ToList();
 
-            foreach (var photo in photosToRemove) 
-            {
-                product.ProductPhotos.Remove(photo);
-                await _productPhotoRepo.DeleteAsync(photo);
-            }
-            foreach(var dtoPhoto in input.ProductPhotos)
+            // 5) Update existing photos
+            foreach (var dtoPhoto in input.ProductPhotos)
             {
                 var existingPhoto = existingPhotos.FirstOrDefault(p => p.Id == dtoPhoto.ProductId);
 
-                if(existingPhoto != null)
+                if (existingPhoto != null)
                 {
                     existingPhoto.Update(dtoPhoto.PictureUrl, dtoPhoto.DisplayOrder);
                 }
-                else
-                {
-                    var newPhoto = new ProductPhoto(0, product.Id, dtoPhoto.PictureUrl, dtoPhoto.DisplayOrder);
-                    await _productPhotoRepo.InsertAsync(newPhoto, autoSave: true);
-                    product.ProductPhotos.Add(newPhoto);
-                }
+            }
 
+            var existingCategories = product.ProductCategories.ToList();
 
+            if (existingCategories.Any())
+            {
+                await _productCategoryRepo.DeleteManyAsync(existingCategories);
+            }
+            
+            if(input.CategoryIds !=null&& input.CategoryIds.Any())
+            {
+                var productCategories = input.CategoryIds.Select(cid => new ProductCategory(0, product.Id, cid)).ToList();
+                await _productCategoryRepo.InsertManyAsync(productCategories,autoSave: true);
             }
 
             await _productRepo.UpdateAsync(product, autoSave: true);
+            var updatedProducts = await _productRepo.WithDetailsAsync(
+                p => p.ProductPhotos,
+                p => p.ProductCategories
+            );
 
-            var updatedProduct = await _productRepo.WithDetailsAsync(x => x.ProductPhotos);
 
-            var finalEntity = await updatedProduct.FirstAsync(x => x.Id == product.Id);
+            var finalEntity = updatedProducts.First(x => x.Id == product.Id);
 
-            return _mapper.Map<Product, ProductDto>(finalEntity);
-
+            // 9) Return DTO
+            var dto = _mapper.Map<Product, ProductDto>(finalEntity);
+            dto.CategoryIds = finalEntity.ProductCategories.Select(pc => pc.CategoryId).ToList();
+            return dto;
         }
-
-
-
 
     }
 }

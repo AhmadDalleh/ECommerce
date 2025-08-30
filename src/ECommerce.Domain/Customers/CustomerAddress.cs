@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace ECommerce.Customers
 {
-    public class CustomerAddress : Entity
+    public class CustomerAddress : Entity<Guid>
     {
         #region Properties
 
@@ -19,11 +19,13 @@ namespace ECommerce.Customers
         #region CTOR
         private CustomerAddress() { }  
 
-        public CustomerAddress(Guid customerId, Guid addressId)
+        public CustomerAddress(Guid id,Guid customerId, Guid addressId):base(id)
         {
             CustomerId = customerId;
             AddressId = addressId;
         }
+
+     
 
         #endregion
 

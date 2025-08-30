@@ -1,4 +1,5 @@
-﻿using ECommerce.Catalog.DTOs;
+﻿using AutoMapper;
+using ECommerce.Catalog.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,15 @@ namespace ECommerce.Catalog
             PagedAndSortedResultRequestDto,
             CreateUpdateCategoryDto>, ICategoryAppService
     {
-        public CategoryAppService(IRepository<Category, int> repository) : base(repository)
+
+        private IRepository<Category, int> _categoryRepo;
+        private IMapper _mapper;
+        public CategoryAppService(IRepository<Category, int> repository, IMapper mapper) : base(repository)
         {
+            _categoryRepo = repository;
+            _mapper = mapper;
         }
+
+        
     }
 }

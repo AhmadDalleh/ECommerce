@@ -351,6 +351,9 @@ namespace ECommerce.Migrations
                     b.Property<Guid?>("CustomerId1")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("CustomerId", "AddressId");
 
                     b.HasIndex("AddressId");

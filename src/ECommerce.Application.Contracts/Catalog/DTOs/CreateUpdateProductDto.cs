@@ -1,4 +1,5 @@
 ﻿using ECommerce.Orders.DTOs;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,6 +32,10 @@ namespace ECommerce.Catalog.DTOs
         [Required]
         public bool Published { get; set; }
 
+
+        public IFormFileCollection? UploadedPhotos { get; set; }
         public List<CreateUpdateProductWithPhoto> ProductPhotos { get; set; } = new();
+
+        public List<int> CategoryIds { get; set; } = new();
     }
 }

@@ -13,11 +13,11 @@ namespace ECommerce.Catalog.DTOs
 
         public string Description { get; set; }
 
-        public int? ParentCategoryId { get; set; }
+        public int ParentCategoryId { get; set; }
 
         public string PictureId { get; set; }
 
-        public int? DisplayOrdre {  get; set; }
+        public int DisplayOrdre {  get; set; }
 
         public bool Published {  get; set; }
 

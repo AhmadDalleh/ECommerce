@@ -24,5 +24,6 @@ namespace ECommerce.Catalog.DTOs
         public string? Sku {  get; set; }
 
         public List<ProductPhotoDto>? ProductPhotos { get; set; }
+        public List<int> CategoryIds { get; set; } 
     }
 }

@@ -20,7 +20,7 @@ namespace ECommerce.Catalog.DTOs
 
         public string PictureId { get; set; }
 
-        public int? DisplayOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
         public bool Published { get; set; }
 

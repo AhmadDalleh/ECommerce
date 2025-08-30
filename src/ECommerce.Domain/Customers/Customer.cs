@@ -64,6 +64,15 @@ namespace ECommerce.Customers
             var mapping = CustomerCustomerRoles.FirstOrDefault(x=>x.CustomerRoleId == roleId);
             if(mapping != null) CustomerCustomerRoles.Remove(mapping);
         }
+
+        public void UpdateDetails(string name, string email, string passwordHash, CustomerType type, bool isActive)
+        {
+            Name = name;
+            Email = email;
+            PasswordHash = passwordHash;    
+            Type = type;
+            IsActive = isActive;
+        }
         #endregion
     }
 }
