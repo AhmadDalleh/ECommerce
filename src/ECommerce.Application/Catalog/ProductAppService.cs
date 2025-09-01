@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using ECommerce.Catalog.DTOs;
 using ECommerce.Orders;
+using ECommerce.Permissions;
 using ECommerce.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +21,7 @@ using Volo.Abp.ObjectExtending.Modularity;
 
 namespace ECommerce.Catalog
 {
+    [Authorize(ECommercePermissions.Products.Default)]
     public class ProductAppService :
         CrudAppService<Product,
             ProductDto,
@@ -269,6 +272,14 @@ namespace ECommerce.Catalog
             var dto = _mapper.Map<Product, ProductDto>(finalEntity);
             dto.CategoryIds = finalEntity.ProductCategories.Select(pc => pc.CategoryId).ToList();
             return dto;
+        }
+
+        public override async Task DeleteAsync(int id)
+        {
+            var product = await Repository.GetAsync(id);
+            product.IsDeleted = true;
+            await _productRepo.UpdateAsync(product);
+
         }
 
     }

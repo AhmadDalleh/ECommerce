@@ -32,6 +32,18 @@ public class Program
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            }).AddJwtBearer("JwtBearer", options =>
+            {
+                options.Authority = builder.Configuration["AuthServer:Authority"];
+                options.RequireHttpsMetadata = false;
+                options.Audience = "ECommerce";
+            });
+
             await builder.AddApplicationAsync<ECommerceWebModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();

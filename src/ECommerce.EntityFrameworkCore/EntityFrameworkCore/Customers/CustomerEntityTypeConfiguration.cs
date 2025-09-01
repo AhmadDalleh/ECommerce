@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Identity;
 
 namespace ECommerce.EntityFrameworkCore.Customers
 {
@@ -37,6 +38,18 @@ namespace ECommerce.EntityFrameworkCore.Customers
             builder.Property(c => c.IsActive)
                 .HasDefaultValue(true)
                 .IsRequired();
+
+            builder.Property(c => c.IdentityUserId)
+                .HasColumnName("IdentityUserId")
+                .IsRequired(false);
+
+            builder.HasKey(c=>c.Id);
+
+         
+            builder.HasOne<IdentityUser>()                 // requires EF reference to Identity
+                   .WithMany()
+                   .HasForeignKey(c => c.IdentityUserId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

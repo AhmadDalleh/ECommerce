@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
-using ECommerce.Localization;
+﻿using ECommerce.Localization;
 using ECommerce.MultiTenancy;
+using System.Threading.Tasks;
+using Volo.Abp.Authorization.Permissions;
+using Volo.Abp.Identity;
 using Volo.Abp.Identity.Web.Navigation;
 using Volo.Abp.SettingManagement.Web.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
@@ -33,6 +35,23 @@ public class ECommerceMenuContributor : IMenuContributor
                 order: 0
             )
         );
+        context.Menu.AddItem(
+    new ApplicationMenuItem(
+        "IdentityManagement",
+        l["Menu:IdentityManagement"],
+        icon: "fas fa-users"
+    )
+    .AddItem(new ApplicationMenuItem(
+        IdentityMenuNames.Users,
+        l["Users"],
+        url: "/Identity/Users"
+    ).RequirePermissions(IdentityPermissions.Users.Default)) // 👈 check AbpIdentity.Users permission
+    .AddItem(new ApplicationMenuItem(
+        IdentityMenuNames.Roles,
+        l["Roles"],
+        url: "/Identity/Roles"
+    ).RequirePermissions(IdentityPermissions.Roles.Default)) // 👈 check AbpIdentity.Roles permission
+);
 
         if (MultiTenancyConsts.IsEnabled)
         {

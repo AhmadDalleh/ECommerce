@@ -19,6 +19,7 @@ namespace ECommerce.Customers
         public bool IsActive { get; private set; }
         public DateTime CreatedOnUtc { get; private set; }
         public CustomerType Type { get; private set; }
+        public Guid? IdentityUserId { get; private set; }
 
         #endregion
 
@@ -45,11 +46,17 @@ namespace ECommerce.Customers
             IsActive = true;
             CreatedOnUtc = DateTime.UtcNow;
             Type = type;
-            CustomerAddresses = customerAddresses;
+            CustomerAddresses = customerAddresses ?? new List<CustomerAddress>();
         }
         #endregion
 
         #region Helper Methods
+
+
+        public void LinkIdentityUser(Guid identityUserId)
+        {
+            IdentityUserId = identityUserId;
+        }
 
         public void AddRole(Guid roleId)
         {
@@ -72,6 +79,11 @@ namespace ECommerce.Customers
             PasswordHash = passwordHash;    
             Type = type;
             IsActive = isActive;
+        }
+
+        public void SoftDelete()
+        {
+            IsActive = false;
         }
         #endregion
     }

@@ -4,6 +4,10 @@
     "AppName": "ECommerce",
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "Permission:Users": "User Management",
+    "Permission:Users.Create": "Create User",
+    "Permission:Users.Edit": "Edit User",
+    "Permission:Users.Delete": "Delete User"
   }
 }
