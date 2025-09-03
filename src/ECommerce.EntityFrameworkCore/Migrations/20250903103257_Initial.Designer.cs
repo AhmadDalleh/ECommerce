@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace ECommerce.Migrations
 {
     [DbContext(typeof(ECommerceDbContext))]
-    [Migration("20250830215222_AddIdentityUserIdToCusomer")]
-    partial class AddIdentityUserIdToCusomer
+    [Migration("20250903103257_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
