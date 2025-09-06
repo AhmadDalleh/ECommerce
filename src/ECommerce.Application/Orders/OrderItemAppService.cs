@@ -1,4 +1,6 @@
 ﻿using ECommerce.Orders.DTOs;
+using ECommerce.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace ECommerce.Orders
 {
+    [Authorize(ECommercePermissions.Orders.Default)]
     public class OrderItemAppService :
         CrudAppService<OrderItem, OrderItemDto, int, PagedAndSortedResultRequestDto, CreateUpdateOrderItemDto>, IOrderItemAppService
     {
@@ -21,7 +24,7 @@ namespace ECommerce.Orders
         {
             _orderRepo = orderRepo;
         }
-
+        [Authorize(ECommercePermissions.Orders.Manage)]
         public override async Task<OrderItemDto> CreateAsync(CreateUpdateOrderItemDto input)
         {
             var orderExists = await _orderRepo.AnyAsync(o => o.Id == input.OrderId);
@@ -42,6 +45,7 @@ namespace ECommerce.Orders
 
             return dto;
         }
+        [Authorize(ECommercePermissions.Orders.Manage)]
         public override async Task<OrderItemDto> UpdateAsync(int id, CreateUpdateOrderItemDto input)
         {
             var dto = await base.UpdateAsync(id, input);
@@ -54,7 +58,7 @@ namespace ECommerce.Orders
 
             return dto;
         }
-
+        [Authorize(ECommercePermissions.Orders.Manage)]
         public override async Task DeleteAsync(int id)
         {
             var entity = await Repository.GetAsync(id);

@@ -2,6 +2,9 @@
 using ECommerce.Catalog;
 using ECommerce.Catalog.DTOs;
 using ECommerce.Customers.DTOs;
+using ECommerce.Customers.Enums;
+using ECommerce.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +21,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ECommerce.Customers
 {
+    [Authorize(ECommercePermissions.Customers.Default)]
+
     public class CustomerAppService : CrudAppService<
         Customer,
         CustomerDto,
@@ -38,6 +43,8 @@ namespace ECommerce.Customers
             _userManager = userManager;
             _roleManager = roleManager;
         }
+
+        [Authorize(ECommercePermissions.Customers.Manage)]
 
         public override async Task<CustomerDto> CreateAsync(CreateUpdateCustomerDto input)
         {
@@ -67,12 +74,16 @@ namespace ECommerce.Customers
             customer.LinkIdentityUser(identityUser.Id);
             await Repository.InsertAsync(customer,autoSave:true);
 
-            //foreach(var roleId in input.RoleIds)
-            //{
-            //    customer.AddRole(roleId);
-            //}
+            var roleName = GetRoleNameByCustomerType(customer.Type);
+            if (!await _userManager.IsInRoleAsync(identityUser, roleName))
+            {
+                await _userManager.AddToRoleAsync(identityUser, roleName);
+            }
+
             return MapToGetOutputDto(customer);
         }
+
+        [Authorize(ECommercePermissions.Customers.Manage)]
 
         public override async Task<CustomerDto> UpdateAsync(Guid id, CreateUpdateCustomerDto input)
         {
@@ -95,7 +106,22 @@ namespace ECommerce.Customers
             }
             await Repository.UpdateAsync(customer, autoSave: true);
 
+            var identityUser = await _userManager.FindByIdAsync(customer.IdentityUserId.ToString());
+            if (identityUser != null)
+            {
+                var userRoles = await _userManager.GetRolesAsync(identityUser);
+                foreach (var role in userRoles)
+                {
+                    await _userManager.RemoveFromRoleAsync(identityUser, role);
+                }
+                var newRoleName = GetRoleNameByCustomerType(customer.Type);
+                if(!await _userManager.IsInRoleAsync(identityUser, newRoleName))
+                {
+                    await _userManager.AddToRoleAsync(identityUser, newRoleName);
+                }
+            }
 
+                
             return MapToGetOutputDto(customer);
         }
 
@@ -144,6 +170,7 @@ namespace ECommerce.Customers
             return dto;
         }
 
+        [Authorize(ECommercePermissions.Customers.Manage)]
 
         public override async Task DeleteAsync(Guid id)
         {
@@ -151,6 +178,16 @@ namespace ECommerce.Customers
             customer.SoftDelete();
             await _customerRepository.UpdateAsync(customer);
 
+        }
+
+        private string GetRoleNameByCustomerType(CustomerType type)
+        {
+            return type switch
+            {
+                CustomerType.Admin => "Admin",
+                CustomerType.Custoemr => "Customer", // note your enum typo: Custoemr
+                _ => "Guest"
+            };
         }
 
     }

@@ -1,4 +1,6 @@
 ﻿using ECommerce.Customers.DTOs;
+using ECommerce.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ using Volo.Abp.Domain.Repositories;
 
 namespace ECommerce.Customers
 {
+    [Authorize(ECommercePermissions.Customers.Manage)]
+
     public class CustomerAddressAppService : CrudAppService<
         CustomerAddress,
         CustomerAddressDto,

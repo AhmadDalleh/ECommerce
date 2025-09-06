@@ -76,7 +76,7 @@ namespace ECommerce.Catalog
             var queryable = await _productRepo.GetQueryableAsync();
             product = await queryable
                 .Include(o => o.ProductPhotos)
-                .Include(o=> o.ProductCategories)   
+                .Include(o => o.ProductCategories)
                 .FirstAsync(o => o.Id == id);
 
             var dto = _mapper.Map<Product, ProductDto>(product);
@@ -84,6 +84,9 @@ namespace ECommerce.Catalog
             return dto;
 
         }
+
+        [Authorize(ECommercePermissions.Products.Create)]
+
         public override async Task<ProductDto> CreateAsync([FromForm] CreateUpdateProductDto input)
         {
 
@@ -138,6 +141,8 @@ namespace ECommerce.Catalog
             dto.CategoryIds = entity.ProductCategories.Select(pc => pc.CategoryId).ToList();
             return dto;
         }
+
+        [Authorize(ECommercePermissions.Products.Update)]
 
         public override async Task<ProductDto> UpdateAsync(int id, [FromForm] UpdateProductDto input)
         {
@@ -273,6 +278,8 @@ namespace ECommerce.Catalog
             dto.CategoryIds = finalEntity.ProductCategories.Select(pc => pc.CategoryId).ToList();
             return dto;
         }
+
+        [Authorize(ECommercePermissions.Products.Delete)]
 
         public override async Task DeleteAsync(int id)
         {

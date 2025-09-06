@@ -35,23 +35,6 @@ public class ECommerceMenuContributor : IMenuContributor
                 order: 0
             )
         );
-        context.Menu.AddItem(
-    new ApplicationMenuItem(
-        "IdentityManagement",
-        l["Menu:IdentityManagement"],
-        icon: "fas fa-users"
-    )
-    .AddItem(new ApplicationMenuItem(
-        IdentityMenuNames.Users,
-        l["Users"],
-        url: "/Identity/Users"
-    ).RequirePermissions(IdentityPermissions.Users.Default)) // 👈 check AbpIdentity.Users permission
-    .AddItem(new ApplicationMenuItem(
-        IdentityMenuNames.Roles,
-        l["Roles"],
-        url: "/Identity/Roles"
-    ).RequirePermissions(IdentityPermissions.Roles.Default)) // 👈 check AbpIdentity.Roles permission
-);
 
         if (MultiTenancyConsts.IsEnabled)
         {
@@ -64,6 +47,7 @@ public class ECommerceMenuContributor : IMenuContributor
 
         administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
         administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+        administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 4);
 
         return Task.CompletedTask;
     }

@@ -95,4 +95,16 @@ public static class ECommercePermissions
         public const string Default = GroupName + ".Categories";
         public const string Manage = Default + ".Manage";
     }
+
+
+    public static string[] GetAll()
+    {
+        return new[]
+        {
+                Products.Default, Products.Create, Products.Update, Products.Delete,
+                Orders.Default, Orders.Manage,
+                Customers.Default, Customers.Manage,
+                Categories.Default, Categories.Manage
+            };
+    }
 }
